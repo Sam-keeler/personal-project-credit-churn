@@ -19,10 +19,10 @@ https://trello.com/b/LB42SLDI/credit-card-churn
 | contacted_past_year        | int64   | Number of contacts in the last year                                               |
 | credit_limit               | float64 | The customers credit limit                                                        |
 | revolving_bal_tot          | int64   | Total revolving balance on the credit card                                        |
-| avg_open_to_buy            | float64 | Open to buy credit line (Average of last 12 months)                               |
+| avg_open_to_buy            | float64 | Difference in credit used and credit available (Average of last 12 months)        |
 | trans_amt_chng_q4_q1       | float64 | Change in transaction amount (Q4 over Q1)                                         |
 | tot_trans_amt              | int64   | Total transaction amount (last 12 months)                                         |
 | total_trans_ct             | int64   | Total transaction count (last 12 months)                                          |
 | ct_chng_q4_q1              | float64 | Change in transaction count (Q4 over Q1)                                          |
-| avg_card_utilization_ratio | float64 | Average card utilization ratio                                                    |
+| avg_card_utilization_ratio | float64 | Average of credit used divided by credit available                                |
 

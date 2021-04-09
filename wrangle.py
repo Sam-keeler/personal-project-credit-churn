@@ -32,6 +32,15 @@ def prepare(credit):
                              'Total_Trans_Ct': 'total_trans_ct', 'Total_Ct_Chng_Q4_Q1': 'ct_chng_q4_q1', 
                              'Avg_Utilization_Ratio': 'avg_card_utilization_ratio'}, inplace = True)
     credit.churn.replace({'Existing Customer': 0, 'Attrited Customer': 1}, inplace = True)
+    cut_labels_4 = ['0 - 1000', '1000 - 2000', '2000+']
+    cut_bins = [-1, 1000, 2000, 3000]
+    credit['revolving_bal_bin'] = pd.cut(credit['revolving_bal_tot'], bins=cut_bins, labels=cut_labels_4)
+    cut_labels_3 = ['20-30', '30-40', '40-50', '50-60', '60+']
+    cut_binz = [20, 30, 40, 50, 60, 100]
+    credit['age_bin'] = pd.cut(credit['age'], bins=cut_binz, labels=cut_labels_3)
+    cut_labels_2 = ['0-20%', '20-40%', '40-60%', '60-80%', '80-100%']
+    cut_bin = [-1, 0.2, 0.4, 0.6, 0.8, 1.01]
+    credit['card_util_bin'] = pd.cut(credit['avg_card_utilization_ratio'], bins=cut_bin, labels=cut_labels_2)
     return credit
 
 # Split function splits the data into train, validate, and test.
