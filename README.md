@@ -1,3 +1,6 @@
+## Trello Board
+https://trello.com/b/LB42SLDI/credit-card-churn
+
 ## Data Dictionary
 
 |                            | type    | description                                                                       |
