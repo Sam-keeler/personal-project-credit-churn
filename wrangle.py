@@ -14,7 +14,7 @@ def acquire():
 
 # prepare function drops last two columns (probability predictions using Naive-Bayes), fills 'Unknown' with 'NaN', fills null values with the mode
 # of the respective column (nulls made up less than 16% of all columns) in marital status, income, and education, drops client number, renames
-# columns, and converts churn values to integers.
+# columns, converts churn values to integers, and creates new columns that bins large numeric columns.
 
 def prepare(credit):
     credit.drop(columns = ['Naive_Bayes_Classifier_Attrition_Flag_Card_Category_Contacts_Count_12_mon_Dependent_count_Education_Level_Months_Inactive_12_mon_1', 'Naive_Bayes_Classifier_Attrition_Flag_Card_Category_Contacts_Count_12_mon_Dependent_count_Education_Level_Months_Inactive_12_mon_2'], inplace = True)
@@ -32,8 +32,8 @@ def prepare(credit):
                              'Total_Trans_Ct': 'total_trans_ct', 'Total_Ct_Chng_Q4_Q1': 'ct_chng_q4_q1', 
                              'Avg_Utilization_Ratio': 'avg_card_utilization_ratio'}, inplace = True)
     credit.churn.replace({'Existing Customer': 0, 'Attrited Customer': 1}, inplace = True)
-    cut_labels_4 = ['0 - 1000', '1000 - 2000', '2000+']
-    cut_bins = [-1, 1000, 2000, 3000]
+    cut_labels_4 = ['0', '1 - 1000', '1000 - 2000', '2000+']
+    cut_bins = [-1, 0.99, 1000, 2000, 3000]
     credit['revolving_bal_bin'] = pd.cut(credit['revolving_bal_tot'], bins=cut_bins, labels=cut_labels_4)
     cut_labels_3 = ['20-30', '30-40', '40-50', '50-60', '60+']
     cut_binz = [20, 30, 40, 50, 60, 100]
@@ -49,3 +49,20 @@ def split(credit):
     train, test = train_test_split(credit, test_size=.2, random_state=123, stratify=credit['churn'])
     train, validate = train_test_split(train, test_size=.3, random_state=123, stratify=train['churn'])
     return train, validate, test
+
+# Find the weights of features from the model created
+
+def get_the_weights(rf, x_train):
+    feat = rf.feature_importances_
+    key = x_train.columns.tolist()
+    val = feat.tolist()
+    val = [round(num, 2) for num in val]
+    res = {key[i]: val[i] for i in range(len(key))} 
+    return res
+
+def prep_model(credit):
+    credit['gender'] = credit.gender.apply(lambda x: 1 if x == 'F' else 0)
+    credit.rename(columns = {'gender': 'is_female'}, inplace = True)
+    credit.drop(columns = ['revolving_bal_bin', 'age_bin', 'card_util_bin'], inplace = True)
+    credit.drop(columns = ['education', 'marital_status', 'income', 'card_type'], inplace = True)
+    return credit
