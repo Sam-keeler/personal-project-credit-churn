@@ -14,7 +14,7 @@ https://trello.com/b/LB42SLDI/credit-card-churn
 
 |                            | type    | description                                                                       |
 |:---------------------------|:--------|:----------------------------------------------------------------------------------|
-| churn                      | int64   | Whether the customer is with the bank or not, 1 indicating that they have churned |
+| churn (target)             | int64   | Whether the customer is with the bank or not, 1 indicating that they have churned |
 | age                        | int64   | The customer's age                                                                |
 | gender                     | object  | The customer's gender                                                             |
 | dependents                 | int64   | How many dependents the customer has                                              |
@@ -35,8 +35,23 @@ https://trello.com/b/LB42SLDI/credit-card-churn
 | ct_chng_q4_q1              | float64 | Change in transaction count (Q4 over Q1)                                          |
 | avg_card_utilization_ratio | float64 | Average of credit used divided by credit available                                |
 
+## Project Plan
+- Acquire data from kaggle
+- Prepare data for exploration by handling nulls, removing unnecessary columns, and encoding necessary variables
+- Explore data 
+- Document takeaways from explore and perform statistical tests
+- Prepare for modeling by making dummies and making columns into integers
+- Create models and tweak based on feature weights
+- Use on validate data set
+- Test best model
+- Document results and findings
 
 ## Project Takeaways
 - Random forest model created was 95% accurate at predicting churn, an improvement of about 11% from baseline
 - Personal information about the customer (age, gender, dependents, etc.) turned out to be irrelevant when it came to predicting churn, the trends in how a person uses their credit card was the best indicator of churn
 - If more data were available, would like to see spending categories for each customer to see if that could assist with churn prediction
+
+## How to create notebook
+- Acquire .csv from kaggle and save it into folder
+- All necessary functions are in the wrangle file including acquire, prep for explore, split, prep for modeling, and functions to find feature weights after creating the models
+- Explore and model as you please

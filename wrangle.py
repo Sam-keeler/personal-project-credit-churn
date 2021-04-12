@@ -13,7 +13,7 @@ def acquire():
      return pd.read_csv("BankChurners.csv")
 
 # prepare function drops last two columns (probability predictions using Naive-Bayes), fills 'Unknown' with 'NaN', fills null values with the mode
-# of the respective column (nulls made up less than 16% of all columns) in marital status, income, and education, drops client number, renames
+# of the respective column (nulls made up less than 16% of each column) in marital status, income, and education, drops client number, renames
 # columns, converts churn values to integers, and creates new columns that bins large numeric columns.
 
 def prepare(credit):
@@ -50,7 +50,7 @@ def split(credit):
     train, validate = train_test_split(train, test_size=.3, random_state=123, stratify=train['churn'])
     return train, validate, test
 
-# Find the weights of features from the model created
+# Finds the weights of features from the model created.
 
 def get_the_weights(rf, x_train):
     feat = rf.feature_importances_
@@ -59,6 +59,19 @@ def get_the_weights(rf, x_train):
     val = [round(num, 2) for num in val]
     res = {key[i]: val[i] for i in range(len(key))} 
     return res
+
+# Finds the weights of features for logistic regression model.
+
+def get_the_coef(logit2, x_train):
+    feat = logit2.coef_[0]
+    key = x_train.columns.tolist()
+    val = feat.tolist()
+    val = [round(num, 2) for num in val]
+    res = {key[i]: val[i] for i in range(len(key))} 
+    return res
+
+# Prepare function for modeling, removes most personal information columns and binned columns. Additionally
+# removes financial features rated irrelevant by feature weight functions.
 
 def prep_model(credit):
     credit['gender'] = credit.gender.apply(lambda x: 1 if x == 'F' else 0)
