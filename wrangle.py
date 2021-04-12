@@ -64,5 +64,6 @@ def prep_model(credit):
     credit['gender'] = credit.gender.apply(lambda x: 1 if x == 'F' else 0)
     credit.rename(columns = {'gender': 'is_female'}, inplace = True)
     credit.drop(columns = ['revolving_bal_bin', 'age_bin', 'card_util_bin'], inplace = True)
-    credit.drop(columns = ['education', 'marital_status', 'income', 'card_type'], inplace = True)
+    credit.drop(columns = ['education', 'marital_status', 'income', 'card_type', 'credit_limit',
+                         'is_female', 'dependents', 'avg_open_to_buy', 'age', 'tenure'], inplace = True)
     return credit
