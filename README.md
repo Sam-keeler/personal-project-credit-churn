@@ -49,6 +49,7 @@ https://trello.com/b/LB42SLDI/credit-card-churn
 ## Project Takeaways
 - Random forest model created was 95% accurate at predicting churn, an improvement of about 11% from baseline
 - Personal information about the customer (age, gender, dependents, etc.) turned out to be irrelevant when it came to predicting churn, the trends in how a person uses their credit card was the best indicator of churn
+- Specifically total transaction amount and total transaction count seemed biggest indicators of churn 
 - If more data were available, would like to see spending categories for each customer to see if that could assist with churn prediction
 
 ## How to create notebook
